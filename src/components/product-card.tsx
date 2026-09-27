@@ -25,12 +25,19 @@ export function ProductCard({ product, onPress }: ProductCardProps) {
       accessibilityLabel={`Ver detalle de ${product.name}`}
     >
       <View style={styles.imageContainer}>
-        <Image
-          source={product.image}
-          style={styles.image}
-          resizeMode="contain"
-          accessibilityLabel={product.name}
-        />
+        {product.image ? (
+          <Image
+            source={product.image}
+            style={styles.image}
+            resizeMode="contain"
+            accessibilityLabel={product.name}
+          />
+        ) : (
+          <View style={styles.imageFallback}>
+            <Text style={styles.imageFallbackBrand}>TEKA</Text>
+            <Text style={styles.imageFallbackText}>Imagen próximamente</Text>
+          </View>
+        )}
 
         {product.isNew && (
           <View style={styles.badge}>
@@ -101,5 +108,24 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
     fontSize: 14,
     fontWeight: '700',
+  },
+
+  imageFallback: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: spacing[4],
+  },
+  imageFallbackBrand: {
+    color: colors.primaryDark,
+    fontSize: 20,
+    fontWeight: '900',
+    letterSpacing: 4,
+    marginBottom: spacing[2],
+  },
+  imageFallbackText: {
+    color: colors.textMuted,
+    fontSize: 12,
+    textAlign: 'center',
   },
 });
