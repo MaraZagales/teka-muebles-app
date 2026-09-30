@@ -1,8 +1,8 @@
 import { getProductImage } from '@/data/product-images';
 import type { Product } from '@/data/products';
 import type {
-    ApiProduct,
-    ApiSalePrice,
+  ApiProduct,
+  ApiSalePrice,
 } from '@/types/teka-api';
 
 function formatPrice(price: number): string {
