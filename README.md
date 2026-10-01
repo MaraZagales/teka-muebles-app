@@ -24,15 +24,17 @@ Desarrollar una aplicación móvil que facilite la consulta y selección de mueb
 
 ## Features y estado de avance
 
-| Feature | Estado | Avance actual |
-| --- | --- | --- |
-| Consultar el catálogo de productos | Implementada, pendiente de cierre | Consume productos, precios y categorías de la API real. Inicio muestra hasta cuatro destacados y Catálogo muestra todos los productos activos. |
-| Buscar y filtrar productos | Implementada, pendiente de cierre | Permite buscar por nombre, filtrar por categoría, combinar filtros y limpiar la búsqueda. |
-| Consultar el detalle de un producto | En desarrollo | Incluye ruta dinámica, producto, precio vigente, stock, descripción, color y galería de imágenes. |
-| Gestionar el carrito de compras | En desarrollo | Permite agregar productos, modificar cantidades, eliminar, vaciar y calcular unidades e importe total mediante Zustand. |
-| Confirmar una solicitud de compra | Pendiente | Falta implementar el formulario de datos, la revisión del pedido y su confirmación. |
+## Features y estado de avance
 
-Los estados “pendiente de cierre” indican que la funcionalidad está construida, pero todavía debe completar sus pruebas manuales, documentación y flujo de Pull Request.
+| Feature | Estado | Avance actual |
+|---|---|---|
+| Consultar el catálogo de productos | Implementada | Consume productos, precios y categorías de la API real. Inicio muestra hasta cuatro productos destacados y Catálogo muestra todos los productos activos. |
+| Buscar y filtrar productos | Implementada | Permite buscar por nombre, filtrar por categoría, combinar filtros y limpiar la búsqueda. |
+| Consultar el detalle de un producto | Implementada | Incluye ruta dinámica, producto, precio vigente, stock, descripción, color, galería de imágenes, medidas temporales y selector de cantidad validado. |
+| Gestionar el carrito de compras | Implementada | Permite agregar productos, modificar cantidades, quitar productos, vaciar el carrito y calcular unidades e importe total mediante Zustand. |
+| Confirmar una solicitud de compra | Pendiente | Falta implementar los datos del comprador, la revisión del pedido y su confirmación mediante la API. |
+
+Las funcionalidades marcadas como implementadas ya se encuentran integradas en la rama `main`. Las mejoras pendientes, como medidas reales, productos fabricados con recortes, confirmación de compra, visor 3D y realidad aumentada, se encuentran registradas en el plan de acción.
 
 ## Primera entrega — Unidad I
 
