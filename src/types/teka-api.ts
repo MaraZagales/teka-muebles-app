@@ -35,3 +35,15 @@ export type ApiLookup = {
   id: number;
   descripcion: string;
 };
+
+export type ApiProductStock = {
+  stockProductoId: number;
+  productoId: number;
+  productoCodigo: string;
+  productoNombre: string;
+  depositoId: number;
+  depositoNombre: string;
+  cantidadActual: number;
+  stockMinimo: number;
+  esStockCritico: boolean;
+};

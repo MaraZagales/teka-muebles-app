@@ -1,5 +1,9 @@
 import { apiGet } from '@/services/api-client';
-import type { ApiProduct, ApiSalePrice } from '@/types/teka-api';
+import type {
+  ApiProduct,
+  ApiProductStock,
+  ApiSalePrice,
+} from '@/types/teka-api';
 
 export function getProducts(): Promise<ApiProduct[]> {
   return apiGet<ApiProduct[]>('/api/productos');
@@ -18,5 +22,13 @@ export function getCurrentSalePrice(
 ): Promise<ApiSalePrice> {
   return apiGet<ApiSalePrice>(
     `/api/precios-venta/producto/${productId}/vigente`,
+  );
+}
+
+export function getProductStock(
+  productId: number,
+): Promise<ApiProductStock[]> {
+  return apiGet<ApiProductStock[]>(
+    `/api/stock/productos/por-producto/${productId}`,
   );
 }

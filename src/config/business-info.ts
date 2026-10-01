@@ -9,6 +9,9 @@ export const businessInfo = {
   instagramUrl: 'https://www.instagram.com/teka.livings',
   websiteLabel: 'teka10.mitiendanube.com',
   websiteUrl: 'https://teka10.mitiendanube.com/',
+  whatsappLabel: '353 340-0075',
+  whatsappUrl:
+    'https://wa.me/5493533400075?text=Hola%20TEKA%2C%20quisiera%20consultar%20por%20un%20mueble.',
   mapsUrl:
     'https://www.google.com/maps/search/?api=1&query=Avenida%20Jap%C3%B3n%201990%2C%20pasaje%20Giuliano%2C%20C%C3%B3rdoba%20Capital',
 } as const;

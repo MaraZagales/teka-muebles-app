@@ -1,4 +1,7 @@
-import { getProductImage } from '@/data/product-images';
+import {
+  getProductImage,
+  getProductImages,
+} from '@/data/product-images';
 import type { Product } from '@/data/products';
 import type {
   ApiProduct,
@@ -35,6 +38,7 @@ export function adaptCatalogProducts(
         : formatPrice(price),
       priceValue: price ?? null,
       image: getProductImage(apiProduct.productoId),
+      images: getProductImages(apiProduct.productoId),
     };
   });
 }

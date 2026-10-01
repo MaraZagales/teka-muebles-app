@@ -98,8 +98,20 @@ export default function CatalogScreen() {
     });
   }
 
+  function openProduct(productId: number) {
+    router.push({
+      pathname: '/producto/[id]',
+      params: { id: productId.toString() },
+    });
+  }
+
   function renderProduct({ item }: { item: Product }) {
-    return <ProductCard product={item} />;
+    return (
+      <ProductCard
+        product={item}
+        onPress={() => openProduct(item.id)}
+      />
+    );
   }
 
   if (isLoading) {
