@@ -38,17 +38,16 @@ export function AppFooter() {
 
   return (
     <View style={styles.footer}>
-      <Text style={styles.brand}>{businessInfo.name}</Text>
-      <Text style={styles.tagline}>{businessInfo.tagline}</Text>
-      <Text style={styles.description}>
-        {businessInfo.description}
-      </Text>
+      <View style={styles.brandBlock}>
+        <Text style={styles.brand}>{businessInfo.name}</Text>
+        <Text style={styles.tagline}>{businessInfo.tagline}</Text>
+      </View>
 
       <View style={styles.links}>
         <FooterLink
-          icon="location-outline"
-          label={businessInfo.address}
-          url={businessInfo.mapsUrl}
+          icon="logo-whatsapp"
+          label={businessInfo.whatsappLabel}
+          url={businessInfo.whatsappUrl}
         />
         <FooterLink
           icon="logo-instagram"
@@ -56,15 +55,20 @@ export function AppFooter() {
           url={businessInfo.instagramUrl}
         />
         <FooterLink
+          icon="location-outline"
+          label="Cómo llegar"
+          url={businessInfo.mapsUrl}
+        />
+        <FooterLink
           icon="globe-outline"
-          label={businessInfo.websiteLabel}
+          label="Tienda online"
           url={businessInfo.websiteUrl}
         />
       </View>
 
       <View style={styles.bottomRow}>
         <Text style={styles.bottomText}>
-          Córdoba, Argentina
+          Córdoba Capital
         </Text>
         <Text style={styles.bottomText}>
           © {currentYear} TEKA
@@ -76,66 +80,66 @@ export function AppFooter() {
 
 const styles = StyleSheet.create({
   footer: {
-    borderRadius: radii.large,
-    padding: spacing[6],
+    borderRadius: radii.medium,
+    padding: spacing[4],
     backgroundColor: colors.primaryDark,
+  },
+  brandBlock: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    flexWrap: 'wrap',
+    gap: spacing[2],
   },
   brand: {
     color: colors.white,
-    fontSize: 28,
+    fontSize: 20,
     fontWeight: '900',
-    letterSpacing: 4,
+    letterSpacing: 3,
   },
   tagline: {
     color: colors.accent,
-    fontSize: 11,
+    fontSize: 9,
     fontWeight: '800',
-    letterSpacing: 1.6,
-    marginTop: spacing[1],
-  },
-  description: {
-    maxWidth: 480,
-    color: colors.whiteMuted,
-    fontSize: 14,
-    lineHeight: 22,
-    marginTop: spacing[4],
+    letterSpacing: 1.2,
   },
   links: {
-    gap: spacing[3],
-    marginTop: spacing[6],
-    marginBottom: spacing[6],
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing[2],
+    marginTop: spacing[3],
   },
   link: {
     minHeight: 44,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing[3],
+    gap: spacing[2],
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.16)',
+    borderRadius: radii.full,
+    paddingRight: spacing[3],
+    backgroundColor: 'rgba(255,255,255,0.06)',
   },
   linkIcon: {
-    width: 36,
-    height: 36,
+    width: 40,
+    height: 40,
     borderRadius: radii.full,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colors.surface,
+    backgroundColor: 'rgba(255,255,255,0.10)',
   },
   linkText: {
-    flex: 1,
     color: colors.white,
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: '600',
+    fontSize: 12,
+    fontWeight: '700',
   },
   bottomRow: {
-    borderTopWidth: 1,
-    borderTopColor: colors.primary,
-    paddingTop: spacing[4],
+    paddingTop: spacing[3],
     flexDirection: 'row',
     justifyContent: 'space-between',
     gap: spacing[4],
   },
   bottomText: {
     color: colors.whiteMuted,
-    fontSize: 11,
+    fontSize: 10,
   },
 });

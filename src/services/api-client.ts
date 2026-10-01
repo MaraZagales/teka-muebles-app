@@ -5,6 +5,16 @@ type ApiErrorResponse = {
   detalle?: string;
 };
 
+export class ApiRequestError extends Error {
+  constructor(
+    public readonly status: number,
+    message: string,
+  ) {
+    super(message);
+    this.name = 'ApiRequestError';
+  }
+}
+
 export async function apiGet<T>(path: string): Promise<T> {
   const response = await fetch(`${API_URL}${path}`, {
     headers: {
@@ -22,7 +32,7 @@ export async function apiGet<T>(path: string): Promise<T> {
       // La respuesta no contenía un error en formato JSON.
     }
 
-    throw new Error(message);
+    throw new ApiRequestError(response.status, message);
   }
 
   return (await response.json()) as T;

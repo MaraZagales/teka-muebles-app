@@ -60,6 +60,13 @@ export default function HomeScreen() {
     });
   }
 
+  function openProduct(productId: number) {
+    router.push({
+      pathname: '/producto/[id]',
+      params: { id: productId.toString() },
+    });
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar
@@ -82,9 +89,6 @@ export default function HomeScreen() {
             />
             <View style={styles.heroOverlay} />
             <View style={styles.heroContent}>
-              <Text style={styles.heroKicker}>
-                MUEBLES DISEÑADOS Y FABRICADOS EN CÓRDOBA
-              </Text>
               <Text style={styles.heroTitle}>
                 Espacios que se sienten tuyos
               </Text>
@@ -113,7 +117,7 @@ export default function HomeScreen() {
             <View style={styles.valueItem}>
               <Text style={styles.valueIcon}>✦</Text>
               <Text style={styles.valueText}>
-                Diseño para todos los días
+                Muebles funcionales
               </Text>
             </View>
             <View style={styles.valueItem}>
@@ -210,7 +214,11 @@ export default function HomeScreen() {
               ) : (
                 <View style={styles.productGrid}>
                   {featuredProducts.map((product) => (
-                    <ProductCard key={product.id} product={product} />
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      onPress={() => openProduct(product.id)}
+                    />
                   ))}
                 </View>
               )}

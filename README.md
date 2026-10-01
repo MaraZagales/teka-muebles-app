@@ -26,11 +26,13 @@ Desarrollar una aplicación móvil que facilite la consulta y selección de mueb
 
 | Feature | Estado | Avance actual |
 | --- | --- | --- |
-| Consultar el catálogo de productos | En desarrollo | Se muestran cuatro productos de demostración con imagen, nombre, categoría y precio. Falta completar el catálogo. |
-| Buscar y filtrar productos | Pendiente | Las categorías son visuales: todavía no filtran. La búsqueda no está implementada. |
-| Consultar el detalle de un producto | Pendiente | Falta implementar la información ampliada y la navegación desde las tarjetas. |
-| Gestionar el carrito de compras | Pendiente | El carrito es visual. Falta agregar productos, modificar cantidades, eliminarlos y calcular el total. |
+| Consultar el catálogo de productos | Implementada, pendiente de cierre | Consume productos, precios y categorías de la API real. Inicio muestra hasta cuatro destacados y Catálogo muestra todos los productos activos. |
+| Buscar y filtrar productos | Implementada, pendiente de cierre | Permite buscar por nombre, filtrar por categoría, combinar filtros y limpiar la búsqueda. |
+| Consultar el detalle de un producto | En desarrollo | Incluye ruta dinámica, producto, precio vigente, stock, descripción, color y galería de imágenes. |
+| Gestionar el carrito de compras | En desarrollo | Permite agregar productos, modificar cantidades, eliminar, vaciar y calcular unidades e importe total mediante Zustand. |
 | Confirmar una solicitud de compra | Pendiente | Falta implementar el formulario de datos, la revisión del pedido y su confirmación. |
+
+Los estados “pendiente de cierre” indican que la funcionalidad está construida, pero todavía debe completar sus pruebas manuales, documentación y flujo de Pull Request.
 
 ## Primera entrega — Unidad I
 
@@ -71,6 +73,47 @@ La identidad visual utiliza tonos crema, verde y madera, junto con fotografías 
 * Expo SDK 57.
 * Expo Router.
 * TypeScript.
+* TanStack Query para consultas y caché de la API.
+* Zustand para el estado local del carrito.
+
+## Integración con TEKA Manager
+
+La aplicación utiliza datos reales expuestos por la API de TEKA:
+
+| Información | Endpoint |
+| --- | --- |
+| Productos | `GET /api/productos` y `GET /api/productos/{id}` |
+| Categorías | `GET /api/auxiliares/tipos-producto` |
+| Precios | `GET /api/precios-venta` y `GET /api/precios-venta/producto/{id}/vigente` |
+| Stock | `GET /api/stock/productos/por-producto/{id}` |
+
+Las fotografías continúan siendo recursos locales asociados al `ProductoId`. La base y la API todavía no poseen una entidad de imágenes de producto; esa ampliación queda registrada como una decisión pendiente.
+
+## Configuración local
+
+1. Copiar `.env.example` con el nombre `.env`.
+2. Reemplazar la URL de ejemplo por la dirección de la API accesible desde el dispositivo.
+
+```env
+EXPO_PUBLIC_API_URL=http://TU_IP_LOCAL:PUERTO
+```
+
+No se deben subir archivos `.env` al repositorio.
+
+## Ejecución
+
+```bash
+npm install
+npx expo start --clear
+```
+
+Para probar en Expo Go, la computadora y el celular deben poder acceder a la misma red y a la URL configurada para la API.
+
+La dirección depende del entorno de prueba:
+
+* En Expo Web, si la API se ejecuta en la misma computadora, se puede usar `http://localhost:PUERTO`.
+* En un celular físico, se debe usar la dirección IPv4 local de la computadora, por ejemplo `http://192.168.1.20:PUERTO`.
+* Si la computadora cambia de red, su dirección IPv4 puede cambiar. En ese caso hay que actualizar el archivo `.env` y reiniciar Expo con `npx expo start --clear`.
 
 ## Archivos principales
 
@@ -78,10 +121,35 @@ La identidad visual utiliza tonos crema, verde y madera, junto con fotografías 
 | ---------------------------------- | -------------------------------------------------------- |
 | `src/app/_layout.tsx`              | Configuración de la estructura de navegación.            |
 | `src/app/index.tsx`                | Pantalla principal de la aplicación.                     |
+| `src/app/catalogo.tsx`             | Catálogo, búsqueda y filtros.                             |
+| `src/components/action-modal.tsx` | Confirmaciones reutilizables en Expo Web y Expo Go.       |
+| `src/components/feedback-toast.tsx` | Avisos breves y no bloqueantes para acciones exitosas.   |
+| `src/app/producto/[id].tsx`        | Detalle dinámico del producto.                            |
+| `src/app/carrito.tsx`              | Gestión del carrito.                                      |
 | `src/components/product-card.tsx`  | Tarjeta reutilizable para presentar un producto.         |
 | `src/components/category-chip.tsx` | Componente reutilizable para presentar una categoría.    |
-| `src/data/products.ts`             | Datos de demostración y definición del tipo de producto. |
+| `src/components/product-gallery.tsx` | Galería reutilizable de imágenes.                       |
+| `src/components/quantity-selector.tsx` | Selector validado de cantidades.                      |
+| `src/hooks/use-catalog-data.ts`    | Consulta y adaptación del catálogo.                       |
+| `src/hooks/use-product-detail.ts`  | Consulta del producto, precio vigente y stock.            |
+| `src/store/cart-store.ts`          | Estado y reglas del carrito con Zustand.                  |
+| `src/data/products.ts`             | Tipo de producto utilizado por la interfaz.               |
 | `src/theme/design-tokens.ts`       | Colores, radios y escala de espaciado.                   |
 
+## Validaciones incorporadas
 
+* No se muestran productos inactivos en el catálogo.
+* Un producto sin precio vigente no puede agregarse al carrito.
+* Un producto sin stock no puede agregarse al carrito.
+* La cantidad mínima es una unidad.
+* La cantidad no puede superar el stock informado por la API.
+* Agregar nuevamente el mismo producto incrementa su cantidad sin duplicar la línea.
+* Las rutas inválidas muestran un estado controlado.
+* La confirmación de compra deberá volver a validar precio y stock en el servidor.
 
+## Limitaciones conocidas
+
+* Las imágenes aún no provienen de la API.
+* La base actual no contiene medidas físicas, materiales comerciales ni modelos 3D.
+* El botón de realidad aumentada se muestra deshabilitado hasta contar con un modelo 3D real del producto.
+* La confirmación de compra todavía no está implementada.

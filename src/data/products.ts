@@ -10,5 +10,6 @@ export type Product = {
   price: string;
   priceValue?: number | null;
   image?: ImageSourcePropType;
+  images?: ImageSourcePropType[];
   isNew?: boolean;
 }

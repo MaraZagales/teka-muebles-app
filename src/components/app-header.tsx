@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import { businessInfo } from '@/config/business-info';
+import { useCartStore } from '@/store/cart-store';
 import { colors, radii, spacing } from '@/theme/design-tokens';
 
 type AppHeaderProps = {
@@ -15,8 +16,16 @@ type AppHeaderProps = {
 };
 
 export function AppHeader({ showBack = false }: AppHeaderProps) {
+  const cartUnits = useCartStore((state) =>
+    state.items.reduce((total, item) => total + item.quantity, 0),
+  );
+
   function goHome() {
     router.replace('/');
+  }
+
+  function openCart() {
+    router.push('/carrito');
   }
 
   return (
@@ -50,20 +59,27 @@ export function AppHeader({ showBack = false }: AppHeaderProps) {
           </Text>
         </TouchableOpacity>
 
-        {showBack && (
-          <TouchableOpacity
-            style={styles.iconButton}
-            onPress={goHome}
-            accessibilityRole="button"
-            accessibilityLabel="Ir al inicio"
-          >
-            <Ionicons
-              name="home-outline"
-              size={21}
-              color={colors.text}
-            />
-          </TouchableOpacity>
-        )}
+        <TouchableOpacity
+          style={styles.iconButton}
+          onPress={openCart}
+          accessibilityRole="button"
+          accessibilityLabel={`Abrir carrito, ${cartUnits} ${
+            cartUnits === 1 ? 'producto' : 'productos'
+          }`}
+        >
+          <Ionicons
+            name="bag-handle-outline"
+            size={22}
+            color={colors.text}
+          />
+          {cartUnits > 0 && (
+            <View style={styles.cartBadge}>
+              <Text style={styles.cartBadgeText}>
+                {cartUnits > 99 ? '99+' : cartUnits}
+              </Text>
+            </View>
+          )}
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -108,5 +124,22 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  cartBadge: {
+    position: 'absolute',
+    top: -2,
+    right: -2,
+    minWidth: 20,
+    height: 20,
+    borderRadius: radii.full,
+    paddingHorizontal: spacing[1],
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.accent,
+  },
+  cartBadgeText: {
+    color: colors.text,
+    fontSize: 10,
+    fontWeight: '900',
   },
 });
