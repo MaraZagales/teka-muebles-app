@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import type { ProductDimensions as ProductDimensionsValue } from '@/data/product-specifications';
+import type { ProductDimensions as ProductDimensionsValue } from '@/types/catalog';
 import { colors, radii, spacing } from '@/theme/design-tokens';
 
 type ProductDimensionsProps = {

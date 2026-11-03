@@ -1,34 +1,17 @@
 import { apiGet } from '@/services/api-client';
 import type {
-  ApiProduct,
-  ApiProductStock,
-  ApiSalePrice,
+  ApiCatalogProduct,
+  ApiCatalogProductDetail,
 } from '@/types/teka-api';
 
-export function getProducts(): Promise<ApiProduct[]> {
-  return apiGet<ApiProduct[]>('/api/productos');
+export function getPublicCatalog(): Promise<ApiCatalogProduct[]> {
+  return apiGet<ApiCatalogProduct[]>('/api/ecommerce/catalogo/publico');
 }
 
-export function getProductById(productId: number): Promise<ApiProduct> {
-  return apiGet<ApiProduct>(`/api/productos/${productId}`);
-}
-
-export function getSalePrices(): Promise<ApiSalePrice[]> {
-  return apiGet<ApiSalePrice[]>('/api/precios-venta');
-}
-
-export function getCurrentSalePrice(
+export function getPublicProductDetail(
   productId: number,
-): Promise<ApiSalePrice> {
-  return apiGet<ApiSalePrice>(
-    `/api/precios-venta/producto/${productId}/vigente`,
-  );
-}
-
-export function getProductStock(
-  productId: number,
-): Promise<ApiProductStock[]> {
-  return apiGet<ApiProductStock[]>(
-    `/api/stock/productos/por-producto/${productId}`,
+): Promise<ApiCatalogProductDetail> {
+  return apiGet<ApiCatalogProductDetail>(
+    `/api/ecommerce/catalogo/publico/${productId}`,
   );
 }

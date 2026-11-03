@@ -24,17 +24,15 @@ Desarrollar una aplicación móvil que facilite la consulta y selección de mueb
 
 ## Features y estado de avance
 
-## Features y estado de avance
-
 | Feature | Estado | Avance actual |
 |---|---|---|
-| Consultar el catálogo de productos | Implementada | Consume productos, precios y categorías de la API real. Inicio muestra hasta cuatro productos destacados y Catálogo muestra todos los productos activos. |
+| Consultar el catálogo de productos | Implementada | Consume exclusivamente el catálogo público de la API. Inicio muestra hasta cuatro productos marcados como destacados y Catálogo muestra solo productos publicados y disponibles. |
 | Buscar y filtrar productos | Implementada | Permite buscar por nombre, filtrar por categoría, combinar filtros y limpiar la búsqueda. |
-| Consultar el detalle de un producto | Implementada | Incluye ruta dinámica, producto, precio vigente, stock, descripción, color, galería de imágenes, medidas temporales y selector de cantidad validado. |
+| Consultar el detalle de un producto | Implementada | Incluye ruta dinámica, precio vigente, disponibilidad online, descripción, color, galería y medidas obtenidas desde la API, con selector de cantidad validado. |
 | Gestionar el carrito de compras | Implementada | Permite agregar productos, modificar cantidades, quitar productos, vaciar el carrito y calcular unidades e importe total mediante Zustand. |
-| Confirmar una solicitud de compra | Pendiente | Falta implementar los datos del comprador, la revisión del pedido y su confirmación mediante la API. |
+| Confirmar una solicitud de compra | Implementada | Solicita comprador y domicilio, vincula la solicitud con un cliente de TEKA Manager mediante el correo, registra un pedido pendiente y muestra el resultado del correo de recepción. No descuenta stock hasta la confirmación interna. |
 
-Las funcionalidades marcadas como implementadas ya se encuentran integradas en la rama `main`. Las mejoras pendientes, como medidas reales, productos fabricados con recortes, confirmación de compra, visor 3D y realidad aumentada, se encuentran registradas en el plan de acción.
+Las mejoras pendientes, como productos fabricados con recortes, visor 3D y realidad aumentada, se encuentran registradas en el plan de acción. El trabajo de checkout y catálogo público se desarrolla en la rama `feature/checkout-solicitud-compra` hasta completar sus pruebas.
 
 ## Primera entrega — Unidad I
 
@@ -57,7 +55,7 @@ La primera versión incluye:
 | `Text`                    | Presentación de títulos, categorías, nombres y precios.                                         |
 | `Image`                   | Visualización del banner y las fotografías de los productos.                                    |
 | `ScrollView`              | Desplazamiento vertical de la pantalla y horizontal de las categorías.                          |
-| Datos estáticos           | Productos y categorías definidos en `src/data/products.ts`.                                     |
+| Datos estáticos           | Utilizados en la primera entrega y reemplazados luego por el catálogo público de la API.         |
 | Componentes reutilizables | `ProductCard` y `CategoryChip`.                                                                 |
 | Props                     | Envío de los datos de cada producto a su tarjeta y del nombre y estado visual a cada categoría. |
 
@@ -84,12 +82,13 @@ La aplicación utiliza datos reales expuestos por la API de TEKA:
 
 | Información | Endpoint |
 | --- | --- |
-| Productos | `GET /api/productos` y `GET /api/productos/{id}` |
-| Categorías | `GET /api/auxiliares/tipos-producto` |
-| Precios | `GET /api/precios-venta` y `GET /api/precios-venta/producto/{id}/vigente` |
-| Stock | `GET /api/stock/productos/por-producto/{id}` |
+| Catálogo publicado | `GET /api/ecommerce/catalogo/publico` |
+| Detalle público, galería y medidas | `GET /api/ecommerce/catalogo/publico/{productoId}` |
+| Provincias para entrega | `GET /api/ecommerce/ubicaciones/provincias` |
+| Localidades por provincia | `GET /api/ecommerce/ubicaciones/localidades?provinciaId={id}` |
+| Confirmación de solicitud | `POST /api/ecommerce/checkout` |
 
-Las fotografías continúan siendo recursos locales asociados al `ProductoId`. La base y la API todavía no poseen una entidad de imágenes de producto; esa ampliación queda registrada como una decisión pendiente.
+El catálogo público es la única fuente del front. La API decide qué productos se muestran según publicación, actividad, precio vigente, ficha técnica, tres imágenes y disponibilidad efectiva. El front no mantiene copias manuales de imágenes, medidas, precios, categorías ni stock.
 
 ## Configuración local
 
@@ -128,30 +127,34 @@ La dirección depende del entorno de prueba:
 | `src/components/feedback-toast.tsx` | Avisos breves y no bloqueantes para acciones exitosas.   |
 | `src/app/producto/[id].tsx`        | Detalle dinámico del producto.                            |
 | `src/app/carrito.tsx`              | Gestión del carrito.                                      |
+| `src/app/checkout.tsx`             | Comprador, domicilio, revisión y confirmación.             |
 | `src/components/product-card.tsx`  | Tarjeta reutilizable para presentar un producto.         |
 | `src/components/category-chip.tsx` | Componente reutilizable para presentar una categoría.    |
 | `src/components/product-gallery.tsx` | Galería reutilizable de imágenes.                       |
 | `src/components/quantity-selector.tsx` | Selector validado de cantidades.                      |
 | `src/hooks/use-catalog-data.ts`    | Consulta y adaptación del catálogo.                       |
-| `src/hooks/use-product-detail.ts`  | Consulta del producto, precio vigente y stock.            |
+| `src/hooks/use-product-detail.ts`  | Consulta del detalle comercial público.                   |
 | `src/store/cart-store.ts`          | Estado y reglas del carrito con Zustand.                  |
-| `src/data/products.ts`             | Tipo de producto utilizado por la interfaz.               |
+| `src/services/checkout-service.ts` | Contrato de confirmación con la API.                       |
+| `src/types/catalog.ts`             | Modelo de producto utilizado por la interfaz.             |
 | `src/theme/design-tokens.ts`       | Colores, radios y escala de espaciado.                   |
 
 ## Validaciones incorporadas
 
-* No se muestran productos inactivos en el catálogo.
-* Un producto sin precio vigente no puede agregarse al carrito.
-* Un producto sin stock no puede agregarse al carrito.
+* No se muestran productos inactivos, ocultos o incompletos.
+* Un producto sin precio vigente o disponibilidad online no ingresa al catálogo público.
 * La cantidad mínima es una unidad.
-* La cantidad no puede superar el stock informado por la API.
+* La cantidad no puede superar la disponibilidad online informada por la API.
 * Agregar nuevamente el mismo producto incrementa su cantidad sin duplicar la línea.
 * Las rutas inválidas muestran un estado controlado.
-* La confirmación de compra deberá volver a validar precio y stock en el servidor.
+* La confirmación vuelve a validar publicación, precio y disponibilidad en el servidor.
+* Una misma solicitud no genera pedidos duplicados al reintentarse.
+* Provincia y localidad se seleccionan desde catálogos públicos de la API.
+* El correo identifica al cliente existente; si no existe, la API crea uno y vincula el domicilio de entrega.
+* La solicitud queda pendiente y no reserva ni descuenta stock. El descuento corresponde a la confirmación interna del pedido.
 
 ## Limitaciones conocidas
 
-* Las imágenes aún no provienen de la API.
-* La base actual no contiene medidas físicas, materiales comerciales ni modelos 3D.
+* La base actual todavía no contiene modelos 3D publicados para la app.
 * El botón de realidad aumentada se muestra deshabilitado hasta contar con un modelo 3D real del producto.
-* La confirmación de compra todavía no está implementada.
+* El correo depende de que el servidor SMTP de la API esté correctamente configurado.

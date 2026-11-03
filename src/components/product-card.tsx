@@ -6,7 +6,7 @@ import {
   View,
 } from 'react-native';
 
-import type { Product } from '@/data/products';
+import type { Product } from '@/types/catalog';
 import { colors, radii, spacing } from '@/theme/design-tokens';
 
 type ProductCardProps = {
@@ -39,9 +39,9 @@ export function ProductCard({ product, onPress }: ProductCardProps) {
           </View>
         )}
 
-        {product.isNew && (
+        {product.isFeatured && (
           <View style={styles.badge}>
-            <Text style={styles.badgeText}>NUEVO</Text>
+            <Text style={styles.badgeText}>DESTACADO</Text>
           </View>
         )}
       </View>
