@@ -166,6 +166,13 @@ export default function ProductDetailScreen() {
     });
   }
 
+  function openRoomPreview() {
+    router.push({
+      pathname: '/previsualizar/[id]',
+      params: { id: product.id.toString() },
+    });
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar
@@ -277,11 +284,10 @@ export default function ProductDetailScreen() {
             </View>
 
             <TouchableOpacity
-              style={[styles.arButton, styles.buttonDisabled]}
-              disabled
+              style={styles.arButton}
+              onPress={openRoomPreview}
               accessibilityRole="button"
-              accessibilityLabel="Ver cómo queda en tu espacio, próximamente"
-              accessibilityState={{ disabled: true }}
+              accessibilityLabel={`Probar ${product.name} en tu espacio`}
             >
               <Ionicons
                 name="scan-outline"
@@ -293,7 +299,7 @@ export default function ProductDetailScreen() {
               </Text>
             </TouchableOpacity>
             <Text style={styles.arHint}>
-              Realidad aumentada próximamente disponible.
+              Usá la cámara o elegí una foto de tu galería.
             </Text>
           </View>
 

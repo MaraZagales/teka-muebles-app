@@ -14,9 +14,9 @@ La aplicación estará orientada al cliente final. No incluirá la administraci�
 
 ## Integrantes
 
-* BENETTI, Gabriela Melina.
-* PIGINI, Fernando Mariano.
-* ZAGALES, Mara Macarena.
+- BENETTI, Gabriela Melina.
+- PIGINI, Fernando Mariano.
+- ZAGALES, Mara Macarena.
 
 ## Objetivo
 
@@ -24,28 +24,29 @@ Desarrollar una aplicación móvil que facilite la consulta y selección de mueb
 
 ## Features y estado de avance
 
-| Feature | Estado | Avance actual |
-|---|---|---|
-| Consultar el catálogo de productos | Implementada | Consume exclusivamente el catálogo público de la API. Inicio muestra hasta cuatro productos marcados como destacados y Catálogo muestra solo productos publicados y disponibles. |
-| Buscar y filtrar productos | Implementada | Permite buscar por nombre, filtrar por categoría, combinar filtros y limpiar la búsqueda. |
-| Consultar el detalle de un producto | Implementada | Incluye ruta dinámica, precio vigente, disponibilidad online, descripción, color, galería y medidas obtenidas desde la API, con selector de cantidad validado. |
-| Gestionar el carrito de compras | Implementada | Permite agregar productos, modificar cantidades, quitar productos, vaciar el carrito y calcular unidades e importe total mediante Zustand. |
-| Confirmar una solicitud de compra | Implementada | Solicita comprador y domicilio, vincula la solicitud con un cliente de TEKA Manager mediante el correo, registra un pedido pendiente y muestra el resultado del correo de recepción. No descuenta stock hasta la confirmación interna. |
+| Feature                                | Estado       | Avance actual                                                                                                                                                                                                                          |
+| -------------------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Consultar el catálogo de productos     | Implementada | Consume exclusivamente el catálogo público de la API. Inicio muestra hasta cuatro productos marcados como destacados y Catálogo muestra solo productos publicados y disponibles.                                                       |
+| Buscar y filtrar productos             | Implementada | Permite buscar por nombre, filtrar por categoría, combinar filtros y limpiar la búsqueda.                                                                                                                                              |
+| Consultar el detalle de un producto    | Implementada | Incluye ruta dinámica, precio vigente, disponibilidad online, descripción, color, galería y medidas obtenidas desde la API, con selector de cantidad validado.                                                                         |
+| Gestionar el carrito de compras        | Implementada | Permite agregar productos, modificar cantidades, quitar productos, vaciar el carrito y calcular unidades e importe total mediante Zustand.                                                                                             |
+| Confirmar una solicitud de compra      | Implementada | Solicita comprador y domicilio, vincula la solicitud con un cliente de TEKA Manager mediante el correo, registra un pedido pendiente y muestra el resultado del correo de recepción. No descuenta stock hasta la confirmación interna. |
+| Previsualizar un mueble en el ambiente | Implementada | Permite fotografiar un ambiente con `expo-camera` o elegir una imagen con `expo-image-picker`, superponer el producto y ajustar su posición y tamaño.                                                                                  |
 
-Las mejoras pendientes, como productos fabricados con recortes, visor 3D y realidad aumentada, se encuentran registradas en el plan de acción. El trabajo de checkout y catálogo público se desarrolla en la rama `feature/checkout-solicitud-compra` hasta completar sus pruebas.
+Las mejoras pendientes, como productos fabricados con recortes y realidad aumentada 3D con detección de superficies, se encuentran registradas en el plan de acción. La previsualización actual es una composición 2D ejecutada en el dispositivo.
 
 ## Primera entrega — Unidad I
 
 La primera versión incluye:
 
-* Pantalla principal relacionada con la temática de TEKA.
-* Encabezado con el nombre del proyecto.
-* Banner de presentación.
-* Categorías con desplazamiento horizontal.
-* Listado de productos destacados.
-* Sección institucional.
-* Datos estáticos definidos dentro del proyecto.
-* Componentes reutilizables y comunicación mediante props.
+- Pantalla principal relacionada con la temática de TEKA.
+- Encabezado con el nombre del proyecto.
+- Banner de presentación.
+- Categorías con desplazamiento horizontal.
+- Listado de productos destacados.
+- Sección institucional.
+- Datos estáticos definidos dentro del proyecto.
+- Componentes reutilizables y comunicación mediante props.
 
 ### Aplicación de los contenidos de la unidad
 
@@ -55,7 +56,7 @@ La primera versión incluye:
 | `Text`                    | Presentación de títulos, categorías, nombres y precios.                                         |
 | `Image`                   | Visualización del banner y las fotografías de los productos.                                    |
 | `ScrollView`              | Desplazamiento vertical de la pantalla y horizontal de las categorías.                          |
-| Datos estáticos           | Utilizados en la primera entrega y reemplazados luego por el catálogo público de la API.         |
+| Datos estáticos           | Utilizados en la primera entrega y reemplazados luego por el catálogo público de la API.        |
 | Componentes reutilizables | `ProductCard` y `CategoryChip`.                                                                 |
 | Props                     | Envío de los datos de cada producto a su tarjeta y del nombre y estado visual a cada categoría. |
 
@@ -69,24 +70,36 @@ La identidad visual utiliza tonos crema, verde y madera, junto con fotografías 
 
 ## Tecnologías
 
-* React Native.
-* Expo SDK 57.
-* Expo Router.
-* TypeScript.
-* TanStack Query para consultas y caché de la API.
-* Zustand para el estado local del carrito.
+- React Native.
+- Expo SDK 57.
+- Expo Router.
+- TypeScript.
+- TanStack Query para consultas y caché de la API.
+- Zustand para el estado local del carrito.
+- Expo Camera para capturar una fotografía del ambiente.
+- Expo Image Picker para seleccionar una imagen de la galería.
+- `PanResponder` para mover el producto sobre la previsualización.
+
+## APIs nativas incorporadas para el parcial
+
+| API                 | Aplicación en TEKA                                                                                |
+| ------------------- | ------------------------------------------------------------------------------------------------- |
+| `expo-camera`       | Solicita permiso de cámara, muestra la vista previa nativa y captura una fotografía del ambiente. |
+| `expo-image-picker` | Solicita acceso a las imágenes y permite elegir una fotografía existente de la galería.           |
+
+Desde el detalle de un producto, la opción **Ver cómo queda en tu espacio** abre una ruta dinámica con el identificador del mueble. La fotografía se utiliza localmente como fondo y no se envía a la API. El usuario puede arrastrar la imagen del producto, modificar su escala y restablecer su posición.
 
 ## Integración con TEKA Manager
 
 La aplicación utiliza datos reales expuestos por la API de TEKA:
 
-| Información | Endpoint |
-| --- | --- |
-| Catálogo publicado | `GET /api/ecommerce/catalogo/publico` |
-| Detalle público, galería y medidas | `GET /api/ecommerce/catalogo/publico/{productoId}` |
-| Provincias para entrega | `GET /api/ecommerce/ubicaciones/provincias` |
-| Localidades por provincia | `GET /api/ecommerce/ubicaciones/localidades?provinciaId={id}` |
-| Confirmación de solicitud | `POST /api/ecommerce/checkout` |
+| Información                        | Endpoint                                                      |
+| ---------------------------------- | ------------------------------------------------------------- |
+| Catálogo publicado                 | `GET /api/ecommerce/catalogo/publico`                         |
+| Detalle público, galería y medidas | `GET /api/ecommerce/catalogo/publico/{productoId}`            |
+| Provincias para entrega            | `GET /api/ecommerce/ubicaciones/provincias`                   |
+| Localidades por provincia          | `GET /api/ecommerce/ubicaciones/localidades?provinciaId={id}` |
+| Confirmación de solicitud          | `POST /api/ecommerce/checkout`                                |
 
 El catálogo público es la única fuente del front. La API decide qué productos se muestran según publicación, actividad, precio vigente, ficha técnica, tres imágenes y disponibilidad efectiva. El front no mantiene copias manuales de imágenes, medidas, precios, categorías ni stock.
 
@@ -112,49 +125,54 @@ Para probar en Expo Go, la computadora y el celular deben poder acceder a la mis
 
 La dirección depende del entorno de prueba:
 
-* En Expo Web, si la API se ejecuta en la misma computadora, se puede usar `http://localhost:PUERTO`.
-* En un celular físico, se debe usar la dirección IPv4 local de la computadora, por ejemplo `http://192.168.1.20:PUERTO`.
-* Si la computadora cambia de red, su dirección IPv4 puede cambiar. En ese caso hay que actualizar el archivo `.env` y reiniciar Expo con `npx expo start --clear`.
+- En Expo Web, si la API se ejecuta en la misma computadora, se puede usar `http://localhost:PUERTO`.
+- En un celular físico, se debe usar la dirección IPv4 local de la computadora, por ejemplo `http://192.168.1.20:PUERTO`.
+- Si la computadora cambia de red, su dirección IPv4 puede cambiar. En ese caso hay que actualizar el archivo `.env` y reiniciar Expo con `npx expo start --clear`.
 
 ## Archivos principales
 
-| Archivo                            | Responsabilidad                                          |
-| ---------------------------------- | -------------------------------------------------------- |
-| `src/app/_layout.tsx`              | Configuración de la estructura de navegación.            |
-| `src/app/index.tsx`                | Pantalla principal de la aplicación.                     |
-| `src/app/catalogo.tsx`             | Catálogo, búsqueda y filtros.                             |
-| `src/components/action-modal.tsx` | Confirmaciones reutilizables en Expo Web y Expo Go.       |
-| `src/components/feedback-toast.tsx` | Avisos breves y no bloqueantes para acciones exitosas.   |
-| `src/app/producto/[id].tsx`        | Detalle dinámico del producto.                            |
-| `src/app/carrito.tsx`              | Gestión del carrito.                                      |
-| `src/app/checkout.tsx`             | Comprador, domicilio, revisión y confirmación.             |
-| `src/components/product-card.tsx`  | Tarjeta reutilizable para presentar un producto.         |
-| `src/components/category-chip.tsx` | Componente reutilizable para presentar una categoría.    |
-| `src/components/product-gallery.tsx` | Galería reutilizable de imágenes.                       |
-| `src/components/quantity-selector.tsx` | Selector validado de cantidades.                      |
-| `src/hooks/use-catalog-data.ts`    | Consulta y adaptación del catálogo.                       |
-| `src/hooks/use-product-detail.ts`  | Consulta del detalle comercial público.                   |
-| `src/store/cart-store.ts`          | Estado y reglas del carrito con Zustand.                  |
-| `src/services/checkout-service.ts` | Contrato de confirmación con la API.                       |
-| `src/types/catalog.ts`             | Modelo de producto utilizado por la interfaz.             |
-| `src/theme/design-tokens.ts`       | Colores, radios y escala de espaciado.                   |
+| Archivo                                | Responsabilidad                                        |
+| -------------------------------------- | ------------------------------------------------------ |
+| `src/app/_layout.tsx`                  | Configuración de la estructura de navegación.          |
+| `src/app/index.tsx`                    | Pantalla principal de la aplicación.                   |
+| `src/app/catalogo.tsx`                 | Catálogo, búsqueda y filtros.                          |
+| `src/components/action-modal.tsx`      | Confirmaciones reutilizables en Expo Web y Expo Go.    |
+| `src/components/feedback-toast.tsx`    | Avisos breves y no bloqueantes para acciones exitosas. |
+| `src/app/producto/[id].tsx`            | Detalle dinámico del producto.                         |
+| `src/app/previsualizar/[id].tsx`       | Cámara, galería y composición 2D del producto.         |
+| `src/app/carrito.tsx`                  | Gestión del carrito.                                   |
+| `src/app/checkout.tsx`                 | Comprador, domicilio, revisión y confirmación.         |
+| `src/components/product-card.tsx`      | Tarjeta reutilizable para presentar un producto.       |
+| `src/components/category-chip.tsx`     | Componente reutilizable para presentar una categoría.  |
+| `src/components/product-gallery.tsx`   | Galería reutilizable de imágenes.                      |
+| `src/components/quantity-selector.tsx` | Selector validado de cantidades.                       |
+| `src/hooks/use-catalog-data.ts`        | Consulta y adaptación del catálogo.                    |
+| `src/hooks/use-product-detail.ts`      | Consulta del detalle comercial público.                |
+| `src/store/cart-store.ts`              | Estado y reglas del carrito con Zustand.               |
+| `src/services/checkout-service.ts`     | Contrato de confirmación con la API.                   |
+| `src/types/catalog.ts`                 | Modelo de producto utilizado por la interfaz.          |
+| `src/theme/design-tokens.ts`           | Colores, radios y escala de espaciado.                 |
 
 ## Validaciones incorporadas
 
-* No se muestran productos inactivos, ocultos o incompletos.
-* Un producto sin precio vigente o disponibilidad online no ingresa al catálogo público.
-* La cantidad mínima es una unidad.
-* La cantidad no puede superar la disponibilidad online informada por la API.
-* Agregar nuevamente el mismo producto incrementa su cantidad sin duplicar la línea.
-* Las rutas inválidas muestran un estado controlado.
-* La confirmación vuelve a validar publicación, precio y disponibilidad en el servidor.
-* Una misma solicitud no genera pedidos duplicados al reintentarse.
-* Provincia y localidad se seleccionan desde catálogos públicos de la API.
-* El correo identifica al cliente existente; si no existe, la API crea uno y vincula el domicilio de entrega.
-* La solicitud queda pendiente y no reserva ni descuenta stock. El descuento corresponde a la confirmación interna del pedido.
+- No se muestran productos inactivos, ocultos o incompletos.
+- Un producto sin precio vigente o disponibilidad online no ingresa al catálogo público.
+- La cantidad mínima es una unidad.
+- La cantidad no puede superar la disponibilidad online informada por la API.
+- Agregar nuevamente el mismo producto incrementa su cantidad sin duplicar la línea.
+- Las rutas inválidas muestran un estado controlado.
+- La confirmación vuelve a validar publicación, precio y disponibilidad en el servidor.
+- Una misma solicitud no genera pedidos duplicados al reintentarse.
+- Provincia y localidad se seleccionan desde catálogos públicos de la API.
+- El correo identifica al cliente existente; si no existe, la API crea uno y vincula el domicilio de entrega.
+- La solicitud queda pendiente y no reserva ni descuenta stock. El descuento corresponde a la confirmación interna del pedido.
+- La cámara no se abre sin permiso y sólo permite capturar cuando su vista previa está lista.
+- La cancelación de la galería no modifica la fotografía seleccionada anteriormente.
+- La previsualización recupera el producto y sus imágenes desde la API mediante una ruta dinámica.
 
 ## Limitaciones conocidas
 
-* La base actual todavía no contiene modelos 3D publicados para la app.
-* El botón de realidad aumentada se muestra deshabilitado hasta contar con un modelo 3D real del producto.
-* El correo depende de que el servidor SMTP de la API esté correctamente configurado.
+- La base actual todavía no contiene modelos 3D publicados para la app.
+- La previsualización es una referencia visual 2D: no detecta pisos, paredes, profundidad ni escala física real.
+- La calidad del resultado depende de que la fotografía comercial permita distinguir correctamente el mueble de su fondo.
+- El correo depende de que el servidor SMTP de la API esté correctamente configurado.
