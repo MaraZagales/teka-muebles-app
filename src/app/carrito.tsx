@@ -189,6 +189,16 @@ export default function CartScreen() {
                   La disponibilidad se volverá a validar al confirmar la compra.
                 </Text>
                 <TouchableOpacity
+                  style={styles.checkoutButton}
+                  onPress={() => router.push('/checkout')}
+                  accessibilityRole="button"
+                  accessibilityLabel="Continuar para confirmar la solicitud"
+                >
+                  <Text style={styles.checkoutButtonText}>
+                    CONTINUAR CON LA SOLICITUD
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
                   style={styles.catalogButton}
                   onPress={() => router.push('/catalogo')}
                   accessibilityRole="button"
@@ -366,16 +376,31 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     marginTop: spacing[4],
   },
-  catalogButton: {
-    minHeight: 48,
+  checkoutButton: {
+    minHeight: 50,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: radii.small,
     backgroundColor: colors.accent,
     marginTop: spacing[4],
   },
-  catalogButtonText: {
+  checkoutButtonText: {
     color: colors.text,
+    fontSize: 11,
+    fontWeight: '900',
+    letterSpacing: 1,
+  },
+  catalogButton: {
+    minHeight: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.45)',
+    borderRadius: radii.small,
+    marginTop: spacing[3],
+  },
+  catalogButtonText: {
+    color: colors.white,
     fontSize: 11,
     fontWeight: '900',
     letterSpacing: 1,

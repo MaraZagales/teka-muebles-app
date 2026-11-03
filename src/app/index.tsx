@@ -29,7 +29,7 @@ export default function HomeScreen() {
   const featuredProducts = useMemo(
     () =>
       (data?.products ?? [])
-        .filter((product) => product.image)
+        .filter((product) => product.isFeatured && product.image)
         .slice(0, MAX_FEATURED_PRODUCTS),
     [data?.products],
   );
@@ -39,13 +39,13 @@ export default function HomeScreen() {
       ALL_CATEGORIES,
       ...Array.from(
         new Set(
-          (data?.productTypes ?? [])
-            .map((type) => type.descripcion)
+          (data?.categories ?? [])
+            .map((category) => category)
             .filter((category) => category.trim().length > 0),
         ),
       ),
     ],
-    [data?.productTypes],
+    [data?.categories],
   );
 
   function openCatalog(category?: string) {

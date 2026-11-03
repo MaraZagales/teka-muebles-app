@@ -19,7 +19,6 @@ import { FeedbackToast } from '@/components/feedback-toast';
 import { ProductGallery } from '@/components/product-gallery';
 import { ProductDimensions } from '@/components/product-dimensions';
 import { QuantitySelector } from '@/components/quantity-selector';
-import { getProductDimensions } from '@/data/product-specifications';
 import { useProductDetail } from '@/hooks/use-product-detail';
 import { ApiRequestError } from '@/services/api-client';
 import { useCartStore } from '@/store/cart-store';
@@ -143,7 +142,6 @@ export default function ProductDetailScreen() {
   const hasPrice = product.priceValue !== null && product.priceValue !== undefined;
   const canAddToCart = hasPrice && availableStock > 0;
   const productImages = product.images ?? (product.image ? [product.image] : []);
-  const productDimensions = getProductDimensions(product.id);
 
   function addToCart() {
     if (!canAddToCart || product.priceValue === null || product.priceValue === undefined) {
@@ -244,9 +242,7 @@ export default function ProductDetailScreen() {
               </View>
             </View>
 
-            {productDimensions && (
-              <ProductDimensions dimensions={productDimensions} />
-            )}
+            <ProductDimensions dimensions={product.dimensions} />
 
             <View style={styles.purchasePanel}>
               <View style={styles.quantityBlock}>

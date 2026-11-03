@@ -1,11 +1,9 @@
-import {
-  getProductImage,
-  getProductImages,
-} from '@/data/product-images';
-import type { Product } from '@/data/products';
+import type { Product } from '@/types/catalog';
+import { resolveApiAssetUrl } from '@/services/api-client';
 import type {
-  ApiProduct,
-  ApiSalePrice,
+  ApiCatalogImage,
+  ApiCatalogProduct,
+  ApiCatalogProductDetail,
 } from '@/types/teka-api';
 
 function formatPrice(price: number): string {
@@ -13,32 +11,43 @@ function formatPrice(price: number): string {
 }
 
 export function adaptCatalogProducts(
-  apiProducts: ApiProduct[],
-  apiPrices: ApiSalePrice[],
+  apiProducts: ApiCatalogProduct[],
 ): Product[] {
-  const pricesByProductId = new Map(
-    apiPrices.map((price) => [
-      price.productoId,
-      price.precio,
-    ]),
-  );
+  return apiProducts.map((apiProduct) => ({
+    id: apiProduct.productoId,
+    code: apiProduct.codigo,
+    name: apiProduct.nombre,
+    description: apiProduct.descripcionComercial,
+    category: apiProduct.tipoProductoNombre,
+    color: apiProduct.colorNombre,
+    price: formatPrice(apiProduct.precio),
+    priceValue: apiProduct.precio,
+    image: { uri: resolveApiAssetUrl(apiProduct.urlPortada) },
+    dimensions: {
+      widthCm: apiProduct.anchoCm,
+      heightCm: apiProduct.altoCm,
+      depthCm: apiProduct.profundidadCm,
+    },
+    availableQuantity: Math.max(0, Math.floor(apiProduct.disponibleOnline)),
+    isFeatured: apiProduct.destacado,
+  }));
+}
 
-  return apiProducts.map((apiProduct) => {
-    const price = pricesByProductId.get(apiProduct.productoId);
+function adaptImages(images: ApiCatalogImage[]) {
+  return [...images]
+    .sort((left, right) => left.ordenVisual - right.ordenVisual)
+    .map((image) => ({ uri: resolveApiAssetUrl(image.urlArchivo) }));
+}
 
-    return {
-      id: apiProduct.productoId,
-      code: apiProduct.codigo,
-      name: apiProduct.nombre,
-      description: apiProduct.descripcion,
-      category: apiProduct.tipoProductoNombre,
-      color: apiProduct.colorNombre,
-      price: price === undefined
-        ? 'Consultar precio'
-        : formatPrice(price),
-      priceValue: price ?? null,
-      image: getProductImage(apiProduct.productoId),
-      images: getProductImages(apiProduct.productoId),
-    };
-  });
+export function adaptCatalogProductDetail(
+  detail: ApiCatalogProductDetail,
+): Product {
+  const product = adaptCatalogProducts([detail.producto])[0];
+  const images = adaptImages(detail.imagenes);
+
+  return {
+    ...product,
+    image: images[0] ?? product.image,
+    images,
+  };
 }

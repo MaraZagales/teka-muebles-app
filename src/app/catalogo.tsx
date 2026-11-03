@@ -16,7 +16,7 @@ import { CategoryChip } from '@/components/category-chip';
 import { EmptyState } from '@/components/empty-state';
 import { ProductCard } from '@/components/product-card';
 import { SearchBar } from '@/components/search-bar';
-import type { Product } from '@/data/products';
+import type { Product } from '@/types/catalog';
 import { useCatalogData } from '@/hooks/use-catalog-data';
 import { colors, radii, spacing } from '@/theme/design-tokens';
 
@@ -56,13 +56,13 @@ export default function CatalogScreen() {
       ALL_CATEGORIES,
       ...Array.from(
         new Set(
-          (data?.productTypes ?? [])
-            .map((type) => type.descripcion)
+          (data?.categories ?? [])
+            .map((category) => category)
             .filter((category) => category.trim().length > 0),
         ),
       ),
     ],
-    [data?.productTypes],
+    [data?.categories],
   );
 
   const filteredProducts = useMemo(() => {

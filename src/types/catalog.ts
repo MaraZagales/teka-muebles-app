@@ -1,5 +1,11 @@
 import type { ImageSourcePropType } from 'react-native';
 
+export type ProductDimensions = {
+  widthCm: number;
+  heightCm: number;
+  depthCm: number;
+};
+
 export type Product = {
   id: number;
   code?: string;
@@ -8,8 +14,10 @@ export type Product = {
   category: string;
   color?: string | null;
   price: string;
-  priceValue?: number | null;
+  priceValue: number;
   image?: ImageSourcePropType;
   images?: ImageSourcePropType[];
-  isNew?: boolean;
-}
+  dimensions: ProductDimensions;
+  availableQuantity: number;
+  isFeatured: boolean;
+};
