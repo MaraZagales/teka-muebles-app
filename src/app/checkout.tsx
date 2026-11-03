@@ -269,10 +269,7 @@ export default function CheckoutScreen() {
   if (result) {
     return (
       <SafeAreaView style={styles.safeArea}>
-        <StatusBar
-          barStyle="dark-content"
-          backgroundColor={colors.background}
-        />
+        <StatusBar barStyle="dark-content" />
         <AppHeader />
         <ScrollView contentContainerStyle={styles.successContent}>
           <View style={styles.successCard}>
@@ -347,7 +344,7 @@ export default function CheckoutScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" backgroundColor={colors.background} />
+      <StatusBar barStyle="dark-content" />
       <AppHeader showBack />
       <KeyboardAvoidingView
         style={styles.keyboardView}

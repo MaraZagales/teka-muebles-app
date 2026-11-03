@@ -68,10 +68,7 @@ export default function ProductDetailScreen() {
   if (productId === null) {
     return (
       <SafeAreaView style={styles.safeArea}>
-        <StatusBar
-          barStyle="dark-content"
-          backgroundColor={colors.background}
-        />
+        <StatusBar barStyle="dark-content" />
         <AppHeader showBack />
         <View style={styles.centeredState}>
           <EmptyState
@@ -88,10 +85,7 @@ export default function ProductDetailScreen() {
   if (isLoading) {
     return (
       <SafeAreaView style={styles.safeArea}>
-        <StatusBar
-          barStyle="dark-content"
-          backgroundColor={colors.background}
-        />
+        <StatusBar barStyle="dark-content" />
         <AppHeader showBack />
         <View style={styles.centeredState}>
           <ActivityIndicator size="large" color={colors.primaryDark} />
@@ -107,10 +101,7 @@ export default function ProductDetailScreen() {
 
     return (
       <SafeAreaView style={styles.safeArea}>
-        <StatusBar
-          barStyle="dark-content"
-          backgroundColor={colors.background}
-        />
+        <StatusBar barStyle="dark-content" />
         <AppHeader showBack />
         <View style={styles.centeredState}>
           <EmptyState
@@ -175,10 +166,7 @@ export default function ProductDetailScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor={colors.background}
-      />
+      <StatusBar barStyle="dark-content" />
       <AppHeader showBack />
 
       <FeedbackToast

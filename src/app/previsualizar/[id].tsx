@@ -177,7 +177,7 @@ export default function ProductPreviewScreen() {
   if (cameraOpen) {
     return (
       <SafeAreaView style={styles.cameraScreen}>
-        <StatusBar barStyle="light-content" backgroundColor="#111111" />
+        <StatusBar barStyle="light-content" />
         <CameraView
           ref={cameraRef}
           style={StyleSheet.absoluteFill}
@@ -293,7 +293,7 @@ export default function ProductPreviewScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" backgroundColor={colors.background} />
+      <StatusBar barStyle="dark-content" />
       <AppHeader showBack />
 
       <ScrollView

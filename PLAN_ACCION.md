@@ -15,7 +15,7 @@
 
 - [x] Primera entrega realizada.
 - [x] Repositorio creado en GitHub.
-- [x] Proyecto actualizado a las versiones recomendadas de Expo SDK 57.
+- [x] Proyecto actualizado a las versiones recomendadas de Expo SDK 58.
 - [x] Expo Doctor validado: 21/21 controles.
 - [x] TypeScript validado sin errores.
 - [x] Rama `feature/catalogo-busqueda` creada.
@@ -38,7 +38,7 @@
 ## Preparación
 
 - [x] Crear la rama `feature/catalogo-busqueda`.
-- [x] Actualizar dependencias de Expo SDK 57.
+- [x] Actualizar dependencias de Expo SDK 58.
 - [x] Ejecutar `npx expo-doctor`.
 - [x] Ejecutar `npx tsc --noEmit`.
 - [x] Probar la aplicación en Expo Go.
@@ -283,7 +283,7 @@
 
 # Feature 7 — Previsualización del ambiente con APIs nativas
 
-- [x] Confirmar compatibilidad de `expo-camera` y `expo-image-picker` con Expo SDK 57 y Expo Go.
+- [x] Confirmar compatibilidad de `expo-camera` y `expo-image-picker` con Expo SDK 58 y Expo Go.
 - [x] Instalar y configurar `expo-camera`.
 - [x] Solicitar y manejar el permiso de cámara.
 - [x] Capturar una fotografía del ambiente desde la app.

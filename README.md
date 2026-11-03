@@ -71,7 +71,7 @@ La identidad visual utiliza tonos crema, verde y madera, junto con fotografías 
 ## Tecnologías
 
 - React Native.
-- Expo SDK 57.
+- Expo SDK 58.
 - Expo Router.
 - TypeScript.
 - TanStack Query para consultas y caché de la API.
