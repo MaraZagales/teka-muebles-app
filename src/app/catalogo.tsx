@@ -117,10 +117,7 @@ export default function CatalogScreen() {
   if (isLoading) {
     return (
       <SafeAreaView style={styles.safeArea}>
-        <StatusBar
-          barStyle="dark-content"
-          backgroundColor={colors.background}
-        />
+        <StatusBar barStyle="dark-content" />
         <AppHeader showBack />
         <View style={styles.centeredState}>
           <ActivityIndicator
@@ -138,10 +135,7 @@ export default function CatalogScreen() {
   if (isError) {
     return (
       <SafeAreaView style={styles.safeArea}>
-        <StatusBar
-          barStyle="dark-content"
-          backgroundColor={colors.background}
-        />
+        <StatusBar barStyle="dark-content" />
         <AppHeader showBack />
         <View style={styles.errorContent}>
           <EmptyState
@@ -157,10 +151,7 @@ export default function CatalogScreen() {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor={colors.background}
-      />
+      <StatusBar barStyle="dark-content" />
       <AppHeader showBack />
 
       <FlatList

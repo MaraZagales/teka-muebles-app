@@ -34,6 +34,21 @@
         }
       ],
       "expo-image",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Permitir que TEKA Muebles use la cámara para fotografiar tu ambiente.",
+          "recordAudioAndroid": false,
+          "barcodeScannerEnabled": false
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Permitir que TEKA Muebles acceda a tus fotos para elegir un ambiente.",
+          "microphonePermission": false
+        }
+      ],
       "expo-web-browser"
     ],
     "experiments": {

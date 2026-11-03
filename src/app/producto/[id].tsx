@@ -68,10 +68,7 @@ export default function ProductDetailScreen() {
   if (productId === null) {
     return (
       <SafeAreaView style={styles.safeArea}>
-        <StatusBar
-          barStyle="dark-content"
-          backgroundColor={colors.background}
-        />
+        <StatusBar barStyle="dark-content" />
         <AppHeader showBack />
         <View style={styles.centeredState}>
           <EmptyState
@@ -88,10 +85,7 @@ export default function ProductDetailScreen() {
   if (isLoading) {
     return (
       <SafeAreaView style={styles.safeArea}>
-        <StatusBar
-          barStyle="dark-content"
-          backgroundColor={colors.background}
-        />
+        <StatusBar barStyle="dark-content" />
         <AppHeader showBack />
         <View style={styles.centeredState}>
           <ActivityIndicator size="large" color={colors.primaryDark} />
@@ -107,10 +101,7 @@ export default function ProductDetailScreen() {
 
     return (
       <SafeAreaView style={styles.safeArea}>
-        <StatusBar
-          barStyle="dark-content"
-          backgroundColor={colors.background}
-        />
+        <StatusBar barStyle="dark-content" />
         <AppHeader showBack />
         <View style={styles.centeredState}>
           <EmptyState
@@ -166,12 +157,16 @@ export default function ProductDetailScreen() {
     });
   }
 
+  function openRoomPreview() {
+    router.push({
+      pathname: '/previsualizar/[id]',
+      params: { id: product.id.toString() },
+    });
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor={colors.background}
-      />
+      <StatusBar barStyle="dark-content" />
       <AppHeader showBack />
 
       <FeedbackToast
@@ -277,11 +272,10 @@ export default function ProductDetailScreen() {
             </View>
 
             <TouchableOpacity
-              style={[styles.arButton, styles.buttonDisabled]}
-              disabled
+              style={styles.arButton}
+              onPress={openRoomPreview}
               accessibilityRole="button"
-              accessibilityLabel="Ver cómo queda en tu espacio, próximamente"
-              accessibilityState={{ disabled: true }}
+              accessibilityLabel={`Probar ${product.name} en tu espacio`}
             >
               <Ionicons
                 name="scan-outline"
@@ -293,7 +287,7 @@ export default function ProductDetailScreen() {
               </Text>
             </TouchableOpacity>
             <Text style={styles.arHint}>
-              Realidad aumentada próximamente disponible.
+              Usá la cámara o elegí una foto de tu galería.
             </Text>
           </View>
 
